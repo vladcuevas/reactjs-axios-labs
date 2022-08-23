@@ -1,0 +1,14 @@
+.footer {
+    align-items: center;
+    background-color: #131921;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 100;
+}
+
+.footer__logoTitle {
+    text-decoration: none;
+    border: 0;
+    color: white;
+}
