@@ -1,6 +1,6 @@
 # React JS Axios Labs
 
-This is a repository cloned from the [reactjs-labs][1], and its intention is to add [AXIOS][11] to be able to call REST APIs, for this repository, the project [Sping-Boot-Labas][9] will be used as the [REST API][4]
+This is a repository cloned from the [reactjs-labs][1], and its intention is to add [AXIOS][11] to be able to call REST APIs. The project [Sping-Boot-Labas][9] will be used as the [REST API][4]
 
 The plan is to integrate the [Frontend][5] and the [Backend][6] with AXIOS, then deploy all of these components on a [Kubernetes][7] cluster by creating Kubernetes objects. These [Kubernetes objects][8] will contain the desired state of our deployment.
 
