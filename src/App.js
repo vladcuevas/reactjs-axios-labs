@@ -3,8 +3,7 @@ import React from 'react';
 import {
   BrowserRouter,
   Routes,
-  Route,
-  Outlet,
+  Route
 } from "react-router-dom";
 
 // react bootstrap
@@ -12,8 +11,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 // end react bootstrap
 
 import './App.css';
-import Header from './components/Header/Header';
-import AdminHeader from './components/Header/AdminHeader';
 import Home from './components/Home/Home'
 import AdminHome from './components/Home/AdminHome'
 
@@ -21,6 +18,9 @@ import Login from './components/Login/Login';
 import Footer from './components/Footer/Footer'
 import Checkout from './components/Checkout/Checkout';
 import Orders from './components/Orders/Orders'
+
+import PersonList from './random/PersonList';
+
 import ErrorPage from './components/ErrorPage';
 
 // react bootstrap
