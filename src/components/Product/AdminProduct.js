@@ -34,15 +34,11 @@ function AdminProduct({ rowsPerPage }) {
     }
   }
 
-  // function GetCurrentTableData() {
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return data.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, data])
-
-  // return currentTableData
-  // }
 
   return (
     <div>
@@ -102,7 +98,7 @@ function AdminProduct({ rowsPerPage }) {
                 pageSize={PageSize}
                 onPageChange={page => setCurrentPage(page)}
               />
-              <Outlet/>
+              <Outlet />
             </div>
           </div>
         </div>
