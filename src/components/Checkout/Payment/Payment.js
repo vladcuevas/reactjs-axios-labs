@@ -1,9 +1,7 @@
 import React from 'react'
 import "./Payment.css"
 import CheckoutProduct from "../CheckoutProduct/CheckoutProduct"
-import Subtotal from '../Subtotal/Subtotal'
 import { useStateValue } from '../../../StateProvider'
-import { Link, Routes, Route, Outlet } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap'
 
 export default function Payment() {

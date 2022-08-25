@@ -3,7 +3,6 @@ import "./Checkout.css"
 import CheckoutProduct from "./CheckoutProduct/CheckoutProduct"
 import Subtotal from './Subtotal/Subtotal'
 import { useStateValue } from '../../StateProvider'
-import { Link, Routes, Route, Outlet } from 'react-router-dom'
 
 export default function Checkout() {
   const [{basket}, dispatch] = useStateValue()

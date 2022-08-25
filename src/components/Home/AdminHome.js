@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Home.css"
 import "./AdminHome.css"
 import AdminProduct from '../Product/AdminProduct'
@@ -13,9 +13,7 @@ import CustomerInfo from "../../components/Admin/CustomerInfo/CustomerInfo"
 
 import {
     Routes,
-    Route,
-    useParams,
-    Outlet
+    Route
 } from "react-router-dom";
 import Reports from "../Admin/Reports/Reports";
 import Customers from "../Admin/Customers/Customers";

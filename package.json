@@ -1,6 +1,6 @@
 {
   "name": "reactjs-axios-labs",
-    "version": "0.1.0",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "*",
@@ -20,8 +20,10 @@
     "react-bootstrap": "*",
     "react-dom": "*",
     "react-number-format": "*",
+    "react-promise-tracker": "^2.1.0",
     "react-router-dom": "*",
-    "react-scripts": "*",
+    "react-scripts": "^5.0.1",
+    "react-spinners": "^0.13.4",
     "web-vitals": "*"
   },
   "scripts": {
@@ -50,6 +52,7 @@
   },
   "devDependencies": {
     "cors": "*",
-    "express": "*"
+    "express": "*",
+    "sass": "^1.54.5"
   }
 }

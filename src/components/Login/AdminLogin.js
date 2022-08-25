@@ -19,7 +19,7 @@ function AdminLogin({logout}) {
 
     }
     
-    if (logout == 1) {
+    if (logout === 1) {
         signOut(auth).then(() => {
             console.log("Logged Out!")
             navigate('/');

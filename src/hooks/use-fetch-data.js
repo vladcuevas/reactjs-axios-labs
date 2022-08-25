@@ -1,6 +1,7 @@
 // use-fetch-data.js
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { trackPromise } from 'react-promise-tracker'
 
 const useFetchData = (url) => {
     const [data, setData] = useState([]);
@@ -9,30 +10,34 @@ const useFetchData = (url) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(
-                    url,
-                    {
-                        auth: {
-                            username: 'admin',
-                            password: 'admin'
+                const { data: response } = await
+                    trackPromise(axios.get(
+                        url,
+                        {
+                            auth: {
+                                username: 'admin',
+                                password: 'admin'
+                            }
                         }
-                    }
-                )
+                    )
+                    )
 
                 setData(response);
             } catch (error) {
                 console.error(error)
             }
-            setLoading(false);
-        };
+            setLoading(false)
+        }
+        setTimeout(() => {
+            fetchData()
+        } ,0)
 
-        fetchData();
-    }, []);
+    }, [url])
 
     return {
         data,
         loading,
-    };
-};
+    }
+}
 
-export default useFetchData;
+export default useFetchData

@@ -3,10 +3,9 @@ import './Header.css'
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import LocalPharmacyIcon from '@mui/icons-material/LocalPharmacy';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link, Routes, Route } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useStateValue } from '../../StateProvider'
 
-import AdminPortalLink from './AdminPortalLink';
 // react bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
 // end react bootstrap

@@ -12,11 +12,7 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 
 import { Link } from 'react-router-dom';
-import {
-    Routes,
-    Route,
-    Outlet
-} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 function Reports() {
     return (

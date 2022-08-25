@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "./firebase";
+import { auth, createUserWithEmailAndPassword } from "./firebase";
 
-import { Link, useNavigate, Outlet, Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 function SingIn() {
