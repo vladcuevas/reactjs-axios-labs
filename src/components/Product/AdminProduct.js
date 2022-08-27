@@ -37,7 +37,21 @@ function AdminProduct({ rowsPerPage }) {
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return data.slice(firstPageIndex, lastPageIndex);
+    const sliced = data.slice(firstPageIndex, lastPageIndex)
+
+    const newArr = sliced.map(obj => {
+      try {
+        let date = new Date(obj.expirationDate)
+        date = date.toISOString().split('T')[0]
+        return {...obj, expirationDate: date}
+      } catch (error) {
+        console.error(error)
+        return obj;
+      }
+    })
+
+
+    return newArr
   }, [currentPage, data])
 
   return (
@@ -74,7 +88,9 @@ function AdminProduct({ rowsPerPage }) {
                     return (
                       <tr className={styles.tableRowItems} key={el.id.toString()}>
                         <td className={styles.tableCell}>
-                          <Link to={'update/medicine/' + el.id.toString()}><EditIcon className={styles.button}>Update</EditIcon></Link>
+                          <Link to={'update/medicine/' + el.id.toString()}>
+                              <EditIcon className={styles.button}>Update</EditIcon>
+                          </Link>
                           <DeleteForeverIcon type='button' className={styles.button} onClick={showAlert}>Delete</DeleteForeverIcon>
                         </td>
                         <td className={styles.tableCell}>{el.name}</td>
