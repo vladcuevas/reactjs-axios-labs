@@ -5,7 +5,7 @@ import UserHeader from '../Header/UserHeader'
 import useTable from "../../hooks/useTable";
 import useFetchData from '../../hooks/use-fetch-data'
 
-import { Routes, Route, } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 function Home() {
     let url = 'http://localhost:8080/api/admin/medicines'

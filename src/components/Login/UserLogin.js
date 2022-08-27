@@ -13,10 +13,9 @@ function UserLogin() {
 
         signInWithEmailAndPassword(auth, email, password)
             .then(auth => {
-                navigate('/home');
+                navigate('/home', {state: {email: email}})
             })
             .catch(error => alert(error.message))
-
     }
 
     function LogIn() {

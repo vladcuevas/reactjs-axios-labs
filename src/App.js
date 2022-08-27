@@ -3,7 +3,8 @@ import React from 'react';
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  useNavigate
 } from "react-router-dom";
 
 // react bootstrap
@@ -18,9 +19,6 @@ import Login from './components/Login/Login';
 import Footer from './components/Footer/Footer'
 import Checkout from './components/Checkout/Checkout';
 import Orders from './components/Orders/Orders'
-
-import PersonList from './random/PersonList';
-
 import ErrorPage from './components/ErrorPage';
 
 // react bootstrap
@@ -29,12 +27,13 @@ import Payment from './components/Checkout/Payment/Payment';
 // end react bootstrap
 
 function App() {
+
   return (
     <div className='App'>
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<Login />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home/*" element={<Home />} />
           <Route path="admin/home/*" element={<AdminHome />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/payment" element={<Payment />}/>

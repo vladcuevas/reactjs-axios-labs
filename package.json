@@ -5,6 +5,8 @@
   "dependencies": {
     "@emotion/react": "*",
     "@emotion/styled": "*",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "*",
     "@mui/material": "*",
     "@testing-library/jest-dom": "*",
@@ -20,10 +22,12 @@
     "react-bootstrap": "*",
     "react-dom": "*",
     "react-number-format": "*",
+    "react-promise-loader": "^1.2.0",
     "react-promise-tracker": "^2.1.0",
     "react-router-dom": "*",
     "react-scripts": "^5.0.1",
     "react-spinners": "^0.13.4",
+    "sweetalert2": "^11.4.29",
     "web-vitals": "*"
   },
   "scripts": {
