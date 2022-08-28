@@ -10,6 +10,7 @@ import {
 } from "react-router-dom"
 
 import useFetchData from '../../hooks/use-fetch-data'
+import PutFetchData from '../../hooks/put-fetch-data'
 
 function UpdateProduct() {
   const [enteredName, setName] = useState('')
@@ -18,7 +19,8 @@ function UpdateProduct() {
   const [enteredDiscount, setDiscount] = useState('')
   const [enteredQuantity, setQuantity] = useState('')
   const [enteredUses, setUses] = useState('')
-  let [enteredExpirationDate, setExpirationDate] = useState(new Date())
+  const [enteredDisease, setDisease] = useState('')
+  let [enteredExpirationDate, setExpirationDate] = useState('')
   let [imageFile, setImageFile] = useState('')
   let [prevProductId, setPrevProductId] = useState('')
 
@@ -55,6 +57,11 @@ function UpdateProduct() {
     setUses(e.target.value)
   }
 
+  const diseaseChangeHandler = (e) => {
+    data['disease'] = e.target.value
+    setDisease(e.target.value)
+  }
+
   const expirationDateChangeHandler = (e) => {
     data['expirationDate'] = e.target.value
     setExpirationDate(e.target.value)
@@ -68,14 +75,35 @@ function UpdateProduct() {
     }
   }
 
-  const submitHandler = (e) => {
+  const SubmitHandler = (e) => {
     e.preventDefault();
 
     //reset the values of input fields
     setName('');
     setCompanyName('');
 
-    return alert('Entered Values are: ' + enteredName + ',' + enteredCompanyName)
+    let data_raw = {
+      "name":enteredName !== '' ? enteredName : data.name,
+      "companyName": enteredCompanyName !== '' ? enteredCompanyName : data.companyName, 
+      "price": enteredPrice !== '' ? enteredPrice : data.price, 
+      "uses": enteredUses !== '' ? enteredUses : data.uses, 
+      "expirationDate": enteredExpirationDate !== '' ? enteredExpirationDate : data.expirationDate, 
+      "discount": enteredDiscount !== '' ? enteredDiscount : data.discount, 
+      "quantity": enteredQuantity !== '' ? enteredQuantity : data.quantity, 
+      "disease": enteredDisease !== '' ? enteredDisease : data.disease, 
+    }
+
+    const putData = new PutFetchData()
+
+    let response = putData.fetchData(url, data_raw)
+
+    console.log(response)
+
+    alert('Updated')
+
+    return response
+
+    // return alert('Entered Values are: ' + enteredName + ',' + enteredCompanyName)
 
   };
   // End Handlers
@@ -114,7 +142,7 @@ function UpdateProduct() {
       {!loading && (
         <div className='div_form_container'>
           <h1>Update Medicine</h1>
-          <Form onSubmit={submitHandler}>
+          <Form onSubmit={SubmitHandler}>
             <Form.Label>Medicine ID: {productId}</Form.Label>
             <Form.Group className="mb-3" controlId="formBasicTitle">
               <Form.Label>Title</Form.Label>
@@ -144,6 +172,11 @@ function UpdateProduct() {
             <Form.Group className="mb-3" controlId="formBasicUses">
               <Form.Label>Uses</Form.Label>
               <Form.Control type="number" value={data.uses} onChange={usesChangeHandler} placeholder="Uses" />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicDisease">
+              <Form.Label>Diseasee</Form.Label>
+              <Form.Control type="text" value={data.disease} onChange={diseaseChangeHandler} placeholder="Enter Disease" />
             </Form.Group>
 
             <Form.Group controlId="expirationDate">
