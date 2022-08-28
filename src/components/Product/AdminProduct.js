@@ -50,7 +50,6 @@ function AdminProduct({ rowsPerPage }) {
       }
     })
 
-
     return newArr
   }, [currentPage, data])
 
