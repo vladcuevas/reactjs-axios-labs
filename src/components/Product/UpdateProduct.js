@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './UpdateProduct.css'
 
 import Button from 'react-bootstrap/Button';
@@ -12,8 +12,6 @@ import {
 import useFetchData from '../../hooks/use-fetch-data'
 
 function UpdateProduct() {
-  const [file, setFile] = useState();
-
   const [enteredName, setName] = useState('')
   const [enteredCompanyName, setCompanyName] = useState('')
   const [enteredPrice, setPrice] = useState('')
@@ -21,7 +19,12 @@ function UpdateProduct() {
   const [enteredQuantity, setQuantity] = useState('')
   const [enteredUses, setUses] = useState('')
   let [enteredExpirationDate, setExpirationDate] = useState(new Date())
+  let [imageFile, setImageFile] = useState('')
+  let [prevProductId, setPrevProductId] = useState('')
 
+  const inputRef = useRef(null);
+
+  // Start Handlers
   const nameChangeHandler = (e) => {
     data['name'] = e.target.value
     setName(e.target.value)
@@ -57,6 +60,14 @@ function UpdateProduct() {
     setExpirationDate(e.target.value)
   }
 
+  function handleImageChange(e) {
+    if (e.target.files.length) {
+      imageFile = e.target.value
+      data.image = URL.createObjectURL(e.target.files[0])
+      setImageFile(URL.createObjectURL(e.target.files[0]))
+    }
+  }
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -67,10 +78,7 @@ function UpdateProduct() {
     return alert('Entered Values are: ' + enteredName + ',' + enteredCompanyName)
 
   };
-
-  function handleChange(e) {
-    setFile(URL.createObjectURL(e.target.files[0]));
-  }
+  // End Handlers
 
   let { productId } = useParams();
 
@@ -80,15 +88,25 @@ function UpdateProduct() {
     data, loading
   } = useFetchData(url)
 
-  // let productDate = useMemo(() => {
-  //   try {
-  //     console.log("triggered useMemo")
-  //     let date = new Date(data.expirationDate)
-  //     return date.toISOString().split('T')[0]
-  //   } catch (error) {
-  //     console.warn(error)
-  //   }
-  // }, [data])
+  const resetFileInput = () => {
+    // 👇️ reset input value
+    inputRef.current.value = null;
+  }
+
+
+  // Used to reset the FileInput when a different product 
+  // is clicked
+  useEffect(() => {
+    // Runs after the first render() lifecycle
+    if (!inputRef.current) {
+      setPrevProductId(productId)
+    } else {
+      if (productId !== prevProductId)
+      {
+        resetFileInput()
+      }
+    }
+  }, [productId, prevProductId]);
 
   return (
     <>
@@ -151,9 +169,15 @@ function UpdateProduct() {
             <Form.Group controlId="formImageURL" className="mb-3">
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label>Image URL</Form.Label>
-                <Form.Control type="file" onChange={handleChange} />
+                <Form.Control ref={inputRef} type="file" onChange={handleImageChange}/>
               </Form.Group>
-              <Image className='Image' src={data.image} thumbnail />
+              {imageFile === data.image ? (
+                <Image className='Image' src={imageFile} thumbnail />
+              ) : (
+                <>
+                  <Image className='Image' src={data.image} thumbnail />
+                </>
+              )}
             </Form.Group>
 
             <Button variant="primary" type="submit" >
