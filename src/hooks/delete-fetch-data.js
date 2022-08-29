@@ -1,13 +1,12 @@
 import axios from 'axios'
 import { trackPromise } from 'react-promise-tracker'
 
-export default class PutFetchData {
-    fetchData = async (url, data_raw) => {
-        console.log(data_raw)
+export default class DeleteData {
+    fetchData = async (url) => {
         try {
             const { data: response } = await
-                trackPromise(axios.put(
-                    url, data_raw,
+                trackPromise(axios.delete(
+                    url,
                     {
                         auth: {
                             username: 'admin',
@@ -16,11 +15,8 @@ export default class PutFetchData {
                     }
                 )
                 )
-                return response 
-            // setData(response)
-            // setState({ updatedAt: response.data.updatedAt })
+                return response
         } catch (error) {
-            // setState({ errorMessage: error.message });
             console.error(error)
             return error
         }

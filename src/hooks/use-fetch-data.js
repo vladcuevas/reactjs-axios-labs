@@ -4,8 +4,8 @@ import axios from 'axios'
 import { trackPromise } from 'react-promise-tracker'
 
 const useFetchData = (url) => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchData = async () => {

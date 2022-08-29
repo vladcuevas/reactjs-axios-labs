@@ -16,25 +16,50 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import GroupIcon from '@mui/icons-material/Group';
 import useFetchData from '../../hooks/use-fetch-data'
+import DeleteData from '../../hooks/delete-fetch-data'
 
 let PageSize = 4;
 
 function AdminProduct({ rowsPerPage }) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1)
+  let [currentTableData, setCurrentTableData] = useState(1)
 
   let url = 'http://localhost:8080/api/admin/medicines'
 
-  const {
-    data, loading
-  } = useFetchData(url)
+  let { data, loading } = useFetchData(url)
 
-  const showAlert = () => {
-    if (window.confirm("Delete?")) {
-      alert("I'm deleting");
+  const deleteProduct = (e, id) => {
+    if (window.confirm(`Do you want to delete the product ${id}?`)) {
+      let deleteURL = `http://localhost:8080/api/admin/medicines/${id}`
+
+      let deleteData = new DeleteData()
+      deleteData.fetchData(deleteURL)
+
+      data = data.filter((v, i) => v.id !== id)
+
+      let firstPageIndex = (currentPage - 1) * PageSize;
+      let lastPageIndex = firstPageIndex + PageSize;
+      let sliced = data.slice(firstPageIndex, lastPageIndex)
+
+      let newArr = sliced.map(obj => {
+        try {
+          let date = new Date(obj.expirationDate)
+          date = date.toISOString().split('T')[0]
+          return {...obj, expirationDate: date}
+        } catch (error) {
+          console.error(error)
+          return obj;
+        }
+      })
+
+      setCurrentTableData(newArr)
+
+      // setCurrentTableData(currentTableData.filter((v, i) => v.id !== id))
+      
     }
   }
 
-  const currentTableData = useMemo(() => {
+  useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     const sliced = data.slice(firstPageIndex, lastPageIndex)
@@ -50,7 +75,7 @@ function AdminProduct({ rowsPerPage }) {
       }
     })
 
-    return newArr
+    setCurrentTableData(newArr)
   }, [currentPage, data])
 
   return (
@@ -90,7 +115,7 @@ function AdminProduct({ rowsPerPage }) {
                           <Link to={'update/medicine/' + el.id.toString()}>
                               <EditIcon className={styles.button}>Update</EditIcon>
                           </Link>
-                          <DeleteForeverIcon type='button' className={styles.button} onClick={showAlert}>Delete</DeleteForeverIcon>
+                          <DeleteForeverIcon type='button' className={styles.button} onClick={(e) => deleteProduct(e, el.id)}>Delete</DeleteForeverIcon>
                         </td>
                         <td className={styles.tableCell}>{el.name}</td>
                         <td className={styles.tableCell}>{el.companyName}</td>
