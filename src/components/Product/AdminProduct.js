@@ -20,13 +20,19 @@ import DeleteData from '../../hooks/delete-fetch-data'
 
 let PageSize = 4;
 
-function AdminProduct({ rowsPerPage }) {
+function AdminProduct() {
   const [currentPage, setCurrentPage] = useState(1)
   let [currentTableData, setCurrentTableData] = useState(1)
+  const [reload, setReload] = useState(false)
 
   let url = 'http://localhost:8080/api/admin/medicines'
 
-  let { data, loading } = useFetchData(url)
+  let { data, loading } = useFetchData(url, reload)
+
+  if (loading === false) {
+    console.log("loaded")
+    console.log(data.length)
+  }
 
   const deleteProduct = (e, id) => {
     if (window.confirm(`Do you want to delete the product ${id}?`)) {
@@ -35,27 +41,7 @@ function AdminProduct({ rowsPerPage }) {
       let deleteData = new DeleteData()
       deleteData.fetchData(deleteURL)
 
-      data = data.filter((v, i) => v.id !== id)
-
-      let firstPageIndex = (currentPage - 1) * PageSize;
-      let lastPageIndex = firstPageIndex + PageSize;
-      let sliced = data.slice(firstPageIndex, lastPageIndex)
-
-      let newArr = sliced.map(obj => {
-        try {
-          let date = new Date(obj.expirationDate)
-          date = date.toISOString().split('T')[0]
-          return {...obj, expirationDate: date}
-        } catch (error) {
-          console.error(error)
-          return obj;
-        }
-      })
-
-      setCurrentTableData(newArr)
-
-      // setCurrentTableData(currentTableData.filter((v, i) => v.id !== id))
-      
+      setReload(!reload)
     }
   }
 
@@ -68,7 +54,7 @@ function AdminProduct({ rowsPerPage }) {
       try {
         let date = new Date(obj.expirationDate)
         date = date.toISOString().split('T')[0]
-        return {...obj, expirationDate: date}
+        return { ...obj, expirationDate: date }
       } catch (error) {
         console.error(error)
         return obj;
@@ -76,6 +62,8 @@ function AdminProduct({ rowsPerPage }) {
     })
 
     setCurrentTableData(newArr)
+
+    return data
   }, [currentPage, data])
 
   return (
@@ -113,7 +101,7 @@ function AdminProduct({ rowsPerPage }) {
                       <tr className={styles.tableRowItems} key={el.id.toString()}>
                         <td className={styles.tableCell}>
                           <Link to={'update/medicine/' + el.id.toString()}>
-                              <EditIcon className={styles.button}>Update</EditIcon>
+                            <EditIcon className={styles.button}>Update</EditIcon>
                           </Link>
                           <DeleteForeverIcon type='button' className={styles.button} onClick={(e) => deleteProduct(e, el.id)}>Delete</DeleteForeverIcon>
                         </td>
