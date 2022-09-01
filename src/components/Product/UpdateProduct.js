@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image'
 
 import {
-  useParams,
+  useParams, useLocation
 } from "react-router-dom"
 
 import useFetchData from '../../hooks/use-fetch-data'
@@ -79,8 +79,8 @@ function UpdateProduct() {
     e.preventDefault();
 
     //reset the values of input fields
-    setName('');
-    setCompanyName('');
+    setName('')
+    setCompanyName('')
 
     let data_raw = {
       "name":enteredName !== '' ? enteredName : data.name,
@@ -103,12 +103,12 @@ function UpdateProduct() {
 
     return response
 
-    // return alert('Entered Values are: ' + enteredName + ',' + enteredCompanyName)
-
-  };
+  }
   // End Handlers
 
-  let { productId } = useParams();
+  let { productId } = useParams()
+  const location = useLocation()
+  console.log(location)
 
   let url = 'http://localhost:8080/api/admin/medicines/' + productId
 
@@ -120,7 +120,6 @@ function UpdateProduct() {
     // 👇️ reset input value
     inputRef.current.value = null;
   }
-
 
   // Used to reset the FileInput when a different product 
   // is clicked
