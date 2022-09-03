@@ -12,7 +12,7 @@ import { Link, Outlet } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import useFetchData from '../../../hooks/use-fetch-data'
-import DeleteData from '../../../hooks/delete-fetch-data'
+import UpdateData from '../../../hooks/update-fetch-data'
 
 let PageSize = 4;
 
@@ -31,8 +31,8 @@ function Customers({ rowsPerPage }) {
     if (window.confirm(`Do you want to delete the customer ${id}?`)) {
       let deleteURL = `http://localhost:8080/api/admin/user/${id}`
 
-      let deleteData = new DeleteData()
-      const {response, deleted} = deleteData.fetchData(deleteURL)
+      let deleteData = new UpdateData()
+      const {response, deleted} = deleteData.fetchData(deleteURL, 'DELETE', {}, )
       console.log(deleted, reload)
 
       if (deleted === 1) {
