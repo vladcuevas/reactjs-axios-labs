@@ -15,7 +15,7 @@ import Home from './components/Home/Home'
 import AdminHome from './components/Home/AdminHome'
 
 import Login from './components/Login/Login';
-import Footer from './components/Footer/Footer'
+// import Footer from './components/Footer/Footer'
 import Checkout from './components/Checkout/Checkout';
 import Orders from './components/Orders/Orders'
 import ErrorPage from './components/ErrorPage';
@@ -40,7 +40,6 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <br /><br /><br />
-        <Footer />
       </BrowserRouter>
     </div>
   )

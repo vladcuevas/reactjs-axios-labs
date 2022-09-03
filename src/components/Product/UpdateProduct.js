@@ -81,6 +81,11 @@ function UpdateProduct() {
     //reset the values of input fields
     setName('')
     setCompanyName('')
+    setPrice('')
+    setUses('')
+    setExpirationDate('')
+    setDiscount('')
+    setDisease('')
 
     let data_raw = {
       "name":enteredName !== '' ? enteredName : data.name,
@@ -97,8 +102,6 @@ function UpdateProduct() {
 
     let response = putData.fetchData(url, data_raw)
 
-    console.log(response)
-
     alert('Updated')
 
     return response
@@ -107,8 +110,6 @@ function UpdateProduct() {
   // End Handlers
 
   let { productId } = useParams()
-  const location = useLocation()
-  console.log(location)
 
   let url = 'http://localhost:8080/api/admin/medicines/' + productId
 
@@ -219,7 +220,7 @@ function UpdateProduct() {
         </div>
       )}
     </>
-  );
+  )
 }
 
 export default UpdateProduct
