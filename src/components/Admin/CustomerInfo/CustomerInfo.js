@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import useFetchData from '../../../hooks/use-fetch-data'
-import PutFetchData from '../../../hooks/put-fetch-data'
+import UpdateData from '../../../hooks/update-fetch-data'
 
 import {
   useParams
@@ -91,18 +91,24 @@ function CustomerInfo() {
       "roles" : data.roles
     }
 
-    console.log(data_raw)
+    const putData = new UpdateData()
 
-    const putData = new PutFetchData()
+    let response = putData.fetchData(url, 'PUT', data_raw)
 
-    let response = putData.fetchData(url, data_raw)
+    // In case of put, the result from the API is the 
+    // response
+    response.then((successMessage) => {
+      alert(`Medicine! ${successMessage.id} was updated`)
+    }).catch((reason) => {
+      if (reason.cause) {
+        console.error("Had previously handled error");
+      } else {
+        console.error(`Trouble with promiseGetWord(): ${reason}`);
+      }
+    })
 
-    console.log(response)
-
-    alert('Updated')
-
+    // End Put the data
     return response
-
   }
   // End Handlers
 

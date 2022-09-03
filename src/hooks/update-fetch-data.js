@@ -2,27 +2,30 @@ import axios from 'axios'
 import { trackPromise } from 'react-promise-tracker'
 
 export default class PutFetchData {
-    fetchData = async (url, data_raw) => {
-        console.log(data_raw)
+    fetchData = async (url, axiosMethod, dataRaw, reload=false) => {
+        console.log(dataRaw)
         try {
             const { data: response } = await
-                trackPromise(axios.put(
-                    url, data_raw,
+                trackPromise(axios(
+                    url,
                     {
+                        method: axiosMethod,
+                        url: url,
                         auth: {
                             username: 'admin',
                             password: 'admin'
-                        }
+                        },
+                        data: dataRaw
                     }
                 )
                 )
-                return response 
-            // setData(response)
-            // setState({ updatedAt: response.data.updatedAt })
+            return response
         } catch (error) {
-            // setState({ errorMessage: error.message });
             console.error(error)
             return error
+        }
+        finally {
+            this.loading = false
         }
     }
 }

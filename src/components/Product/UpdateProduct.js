@@ -10,7 +10,7 @@ import {
 } from "react-router-dom"
 
 import useFetchData from '../../hooks/use-fetch-data'
-import PutFetchData from '../../hooks/put-fetch-data'
+import PutData from '../../hooks/update-fetch-data'
 
 function UpdateProduct() {
   const [enteredName, setName] = useState('')
@@ -23,8 +23,19 @@ function UpdateProduct() {
   let [enteredExpirationDate, setExpirationDate] = useState('')
   let [imageFile, setImageFile] = useState('')
   let [prevProductId, setPrevProductId] = useState('')
+  let [formData, setFormData] = useState('')
 
   const inputRef = useRef(null);
+
+  let { productId } = useParams()
+
+  let url = 'http://localhost:8080/api/admin/medicines/' + productId
+
+  // Get the data
+  const {
+    data, loading
+  } = useFetchData(url, 'GET')
+  // End Get the data
 
   // Start Handlers
   const nameChangeHandler = (e) => {
@@ -98,24 +109,26 @@ function UpdateProduct() {
       "disease": enteredDisease !== '' ? enteredDisease : data.disease, 
     }
 
-    const putData = new PutFetchData()
+    // Put the data
+    const putData = new PutData()
+    let response = putData.fetchData(url, 'PUT', data_raw)
 
-    let response = putData.fetchData(url, data_raw)
+    // In case of put, the result from the API is the 
+    // response
+    response.then((successMessage) => {
+      alert(`Medicine! ${successMessage.id} was updated`)
+    }).catch((reason) => {
+      if (reason.cause) {
+        console.error("Had previously handled error");
+      } else {
+        console.error(`Trouble with promiseGetWord(): ${reason}`);
+      }
+    })
 
-    alert('Updated')
-
+    // End Put the data
     return response
-
   }
   // End Handlers
-
-  let { productId } = useParams()
-
-  let url = 'http://localhost:8080/api/admin/medicines/' + productId
-
-  const {
-    data, loading
-  } = useFetchData(url)
 
   const resetFileInput = () => {
     // 👇️ reset input value

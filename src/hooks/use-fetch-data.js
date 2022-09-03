@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { trackPromise } from 'react-promise-tracker'
 
-const useFetchData = (url, reload) => {
+const useFetchData = (url, axiosMethod='GET', dataRaw={}, reload) => {
     console.log("fetching data")
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -13,13 +13,16 @@ const useFetchData = (url, reload) => {
         const fetchData = async () => {
             try {
                 const { data: response } = await
-                    trackPromise(axios.get(
+                    trackPromise(axios(
                         url,
                         {
+                            method: axiosMethod,
+                            url: url,
                             auth: {
                                 username: 'admin',
                                 password: 'admin'
-                            }
+                            },
+                            data: dataRaw
                         }
                     )
                     )
