@@ -32,9 +32,12 @@ function Customers({ rowsPerPage }) {
       let deleteURL = `http://localhost:8080/api/admin/user/${id}`
 
       let deleteData = new DeleteData()
-      deleteData.fetchData(deleteURL)
+      const {response, deleted} = deleteData.fetchData(deleteURL)
+      console.log(deleted, reload)
 
-      setReload(!reload)
+      if (deleted === 1) {
+        setReload(!reload)
+      }
     }
   }
 
@@ -46,7 +49,6 @@ function Customers({ rowsPerPage }) {
     const newArr = sliced.map(obj => {
       try {
         let date = new Date(obj.dob)
-        console.log(date)
         date = date.toISOString().split('T')[0]
         return { ...obj, expirationDate: date }
       } catch (error) {
