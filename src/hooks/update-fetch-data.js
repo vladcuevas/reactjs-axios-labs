@@ -5,7 +5,7 @@ export default class PutFetchData {
     fetchData = async (url, axiosMethod, dataRaw, reload=false) => {
         console.log(dataRaw)
         try {
-            const { data: response } = await
+            const { data, status, headers, config, request  } = await
                 trackPromise(axios(
                     url,
                     {
@@ -19,7 +19,7 @@ export default class PutFetchData {
                     }
                 )
                 )
-            return response
+            return {data, status, headers, config, request}
         } catch (error) {
             console.error(error)
             return error

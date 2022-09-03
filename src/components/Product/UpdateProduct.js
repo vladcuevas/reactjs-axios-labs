@@ -23,7 +23,6 @@ function UpdateProduct() {
   let [enteredExpirationDate, setExpirationDate] = useState('')
   let [imageFile, setImageFile] = useState('')
   let [prevProductId, setPrevProductId] = useState('')
-  let [formData, setFormData] = useState('')
 
   const inputRef = useRef(null);
 

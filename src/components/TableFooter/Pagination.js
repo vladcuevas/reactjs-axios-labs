@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classnames from 'classnames';
 import { usePagination, DOTS } from './usePagination';
 import './pagination.scss';
@@ -20,6 +20,8 @@ const Pagination = props => {
     pageSize
   });
 
+  const [wasDOTS, setWasDOTS] = useState(false)
+
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;
   }
@@ -34,7 +36,7 @@ const Pagination = props => {
 
   let lastPage = paginationRange[paginationRange.length - 1];
   return (
-    <ul
+    <ul key={"theUL"}
       className={classnames('pagination-container', { [className]: className })}
     >
       <li key={"arrow_left"}
@@ -45,9 +47,9 @@ const Pagination = props => {
       >
         <div className="arrow left" />
       </li>
-      {paginationRange.map(pageNumber => {
-        if (pageNumber === DOTS) {
-          return <li key={pageNumber} className="pagination-item dots">&#8230;</li>;
+      {paginationRange.map(pageNumber => {      
+        if ((pageNumber === DOTS) && (!wasDOTS)) {
+          return <li key={"DOTS"} className="pagination-item dots">&#8230;</li>
         }
 
         return (

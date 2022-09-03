@@ -31,7 +31,6 @@ function AdminProduct() {
 
   if (loading === false) {
     console.log("loaded")
-    console.log(data.length)
   }
 
   const deleteProduct = (e, id) => {
