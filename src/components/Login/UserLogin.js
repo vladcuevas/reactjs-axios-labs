@@ -39,7 +39,7 @@ function UserLogin() {
 
             response.then((successMessage) => {
                 if (successMessage.status === 200) {
-                    navigate('/home', { state: { email: userName } });
+                    navigate('/home', { state: { userName: userName } });
                 }
                 else {
                     alert("Incorrect User or password")

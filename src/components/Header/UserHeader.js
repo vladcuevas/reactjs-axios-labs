@@ -3,7 +3,7 @@ import './Header.css'
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import LocalPharmacyIcon from '@mui/icons-material/LocalPharmacy';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useStateValue } from '../../StateProvider'
 
 // react bootstrap
@@ -12,9 +12,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Header() {
     const {state} = useLocation()
-    const { email } = state;
+    console.log(state)
+    const { userName } = state;
 
     const [{ basket }, dispatch] = useStateValue()
+
+    let navigate = useNavigate();
 
     return (
         <div className="header">
@@ -34,7 +37,7 @@ function Header() {
                 <Link to="/" style={{ textDecoration: "none" }}>
                     <div className="nav__item">
                         <span className="nav__itemLineOne">Hello</span>
-                        <span className="nav__itemLineOne">{email}</span>
+                        <span className="nav__itemLineOne">{userName}</span>
                         <span className="nav__itemLineTwo">Sign In</span>
                     </div>
                 </Link>

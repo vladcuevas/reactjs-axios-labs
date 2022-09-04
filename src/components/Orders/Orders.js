@@ -5,7 +5,7 @@ import UserHeader from '../Header/UserHeader'
 function Orders() {
   return (
     <>
-      <UserHeader/>
+      {/* <UserHeader/> */}
       <h1>Orders</h1>
     </>
   )

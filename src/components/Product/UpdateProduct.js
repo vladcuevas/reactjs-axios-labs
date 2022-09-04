@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image'
 
 import {
-  useParams, useLocation
+  useParams
 } from "react-router-dom"
 
 import useFetchData from '../../hooks/use-fetch-data'
