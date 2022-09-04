@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import "./Home.css"
 import "./AdminHome.css"
 import AdminProduct from '../Product/AdminProduct'
@@ -20,9 +20,8 @@ import Customers from "../Admin/Customers/Customers";
 import AdminHeader from "../Header/AdminHeader";
 
 function AdminHome() {
-    // console.log(useContext())
     return (
-        <>
+        <div key={"login forms"}>
         <AdminHeader className="text-center" />
         <div className="home">
             <div className="div_100">
@@ -44,7 +43,7 @@ function AdminHome() {
                 </Routes>
             </div>
         </div>
-        </>
+        </div>
     )
 }
 

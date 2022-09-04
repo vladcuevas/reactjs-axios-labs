@@ -47,7 +47,8 @@ function AdminLogin() {
 
                 <Form.Group className="mb-3" controlId="formName">
                     <Form.Label><h5>User Name</h5></Form.Label>
-                    <Form.Control type="text" value={userName} 
+                    <Form.Control type="text" 
+                    value={userName} 
                     onChange={e => setUserName(e.target.value)} 
                     placeholder="Enter name" 
                 />

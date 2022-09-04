@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {
   BrowserRouter,
@@ -25,15 +25,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Payment from './components/Checkout/Payment/Payment';
 // end react bootstrap
 
-const UserContext = React.createContext(null);
-
 function App() {
-  const [user, setUser] = useState(null);
 
   return (
     <div className='App'>
       <BrowserRouter>
-      <UserContext.Provider value={user}>
         <Routes>
           <Route path="/*" element={<Login />} />
           <Route path="/home/*" element={<Home />} />
@@ -44,7 +40,6 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <br /><br /><br />
-        </UserContext.Provider>
       </BrowserRouter>
     </div>
   )

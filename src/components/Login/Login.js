@@ -14,7 +14,7 @@ import Header from '../Header/Header';
 function Login() {
 
     return (
-        <>
+        <div key={'main_login_page'}>
             <Routes>
                 <Route path="/" element={<Header className="text-center" />} />
             </Routes>
@@ -33,7 +33,7 @@ function Login() {
                     </Route>
                 </Routes>
             </div>
-        </>
+        </div>
     )
 }
 
