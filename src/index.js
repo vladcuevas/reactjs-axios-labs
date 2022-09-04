@@ -5,7 +5,6 @@ import App from './App';
 import reducer, { initialState } from './reducer';
 import { StateProvider } from "./StateProvider"
 
-
 const root = document.getElementById("root") //div
 
 const reactRoot = createRoot(root)
