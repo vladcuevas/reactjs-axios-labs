@@ -16,31 +16,36 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import GroupIcon from '@mui/icons-material/Group';
 import useFetchData from '../../hooks/use-fetch-data'
-import DeleteData from '../../hooks/delete-fetch-data'
+import UpdateData from '../../hooks/update-fetch-data'
 
 let PageSize = 4;
 
 function AdminProduct() {
   const [currentPage, setCurrentPage] = useState(1)
   let [currentTableData, setCurrentTableData] = useState(1)
-  const [reload, setReload] = useState(false)
+  const [reload, setReload] = useState(0)
 
   let url = 'http://localhost:8080/api/admin/medicines'
 
-  let { data, loading } = useFetchData(url, reload)
-
-  if (loading === false) {
-    console.log("loaded")
-  }
+  let { data, loading } = useFetchData(url, 'GET', {}, reload)
 
   const deleteProduct = (e, id) => {
     if (window.confirm(`Do you want to delete the product ${id}?`)) {
       let deleteURL = `http://localhost:8080/api/admin/medicines/${id}`
 
-      let deleteData = new DeleteData()
-      deleteData.fetchData(deleteURL)
+      let deleteData = new UpdateData()
+      let response = deleteData.fetchData(deleteURL, 'DELETE', {}, )
+      console.log()
 
-      setReload(!reload)
+      response.then(() => {
+        setReload(reload+1)
+      }).catch((reason) => {
+        if (reason.cause) {
+          console.error("Had previously handled error");
+        } else {
+          console.error(`Trouble with promiseGetWord(): ${reason}`);
+        }
+      })
     }
   }
 

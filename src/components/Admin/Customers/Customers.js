@@ -19,25 +19,31 @@ let PageSize = 4;
 function Customers({ rowsPerPage }) {
   const [currentPage, setCurrentPage] = useState(1);
   let [currentTableData, setCurrentTableData] = useState(1)
-  const [reload, setReload] = useState(false)
+  const [reload, setReload] = useState(0)
 
   let url = 'http://localhost:8080/api/admin/user'
 
   const {
     data, loading
-  } = useFetchData(url, reload)
+  } = useFetchData(url, 'GET', {}, reload)
 
   const deleteCustomer = (e, id) => {
     if (window.confirm(`Do you want to delete the customer ${id}?`)) {
       let deleteURL = `http://localhost:8080/api/admin/user/${id}`
 
       let deleteData = new UpdateData()
-      const {response, deleted} = deleteData.fetchData(deleteURL, 'DELETE', {}, )
-      console.log(deleted, reload)
+      let response = deleteData.fetchData(deleteURL, 'DELETE', {}, )
+      console.log()
 
-      if (deleted === 1) {
-        setReload(!reload)
-      }
+      response.then(() => {
+        setReload(reload+1)
+      }).catch((reason) => {
+        if (reason.cause) {
+          console.error("Had previously handled error");
+        } else {
+          console.error(`Trouble with promiseGetWord(): ${reason}`);
+        }
+      })
     }
   }
 
