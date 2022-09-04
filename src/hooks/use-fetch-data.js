@@ -14,7 +14,6 @@ const useFetchData = (url, axiosMethod='GET', dataRaw={}, reload) => {
             try {
                 const { data: response } = await
                     trackPromise(axios(
-                        url,
                         {
                             method: axiosMethod,
                             url: url,

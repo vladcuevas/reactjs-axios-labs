@@ -33,7 +33,7 @@ function AdminHeader() {
                 <Routes>
                     <Route path='/' element={<AdminPortalLink />} />
                 </Routes>
-                <Link to="/" logout="1" style={{ textDecoration: "none" }}>
+                <Link to="/singout" logout="1" style={{ textDecoration: "none" }}>
                     <div className="nav__itemBasket">
                         <LogoutIcon/>
                         <span className="nav__itemLineTwo nav__basketCount">Logout</span>

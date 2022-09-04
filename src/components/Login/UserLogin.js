@@ -11,11 +11,9 @@ function UserLogin() {
         const [password, setPassword] = useState('');
 
         const userNameHandler = (e) => {
-            console.log(e.target.value)
             setUserName(e.target.value)
         }
         const passwordHandler = (e) => {
-            console.log(e.target.value)
             setPassword(e.target.value)
         }
 
@@ -42,7 +40,7 @@ function UserLogin() {
                     navigate('/home', { state: { userName: userName } });
                 }
                 else {
-                    alert("Incorrect User or password")
+                    alert("Incorrect User or password or user is not active")
                 }
             }).catch((reason) => {
                 console.log("not logged")

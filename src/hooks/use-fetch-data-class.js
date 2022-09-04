@@ -21,7 +21,6 @@ export default class Requests {
 
             const { data, status, headers, config, request } = await
                 trackPromise(axios(
-                    url,
                     {
                         method: axiosMethod,
                         url: url,

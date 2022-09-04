@@ -23,6 +23,7 @@ import ErrorPage from './components/ErrorPage';
 // react bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Payment from './components/Checkout/Payment/Payment';
+import SignOut from './components/Login/SignOut';
 // end react bootstrap
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/payment" element={<Payment />}/>
           <Route path="/orders" element={<Orders />} />
+          <Route path="/singout" element={<SignOut />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <br /><br /><br />
