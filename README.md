@@ -23,25 +23,7 @@ In this point the requirements are:
 
 ### Firebase
 
-A [firebase][23] account.
-
-Rename firebase-back.js from src/components/Login to firebase.js and fill the below keys with your values from firebase:
-
-```json
-const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
-  measurementId: ""
-};
-```
-
-Create an admin user in firebase
-
-Log in with the user
+Start the application with npm start command, and then login with use: admin and password: admin for the admin portal. For the user portal, login with user: user and password: user
 
 ## Start the application
 
