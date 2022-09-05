@@ -1,9 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Header.css'
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import LocalPharmacyIcon from '@mui/icons-material/LocalPharmacy';
-import SearchIcon from '@mui/icons-material/Search';
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { useStateValue } from '../../StateProvider'
 
 import Button from 'react-bootstrap/Button';
@@ -22,7 +21,13 @@ function Header() {
 
     const [{ basket }, dispatch] = useStateValue()
 
-    let navigate = useNavigate();
+    const [searchInput, setSearchInput] = useState('')
+
+    // START Handlers
+
+    const searchInputHandler = (e) => {
+        setSearchInput(e.target.value)
+      }
 
     const SubmitHandler = (e) => {
         e.preventDefault();
@@ -31,7 +36,7 @@ function Header() {
             "firstName": 'Amazon'
         }
 
-        const url = 'http://127.0.0.1:8080/api/user/medicines/name/aspirin'
+        const url = `http://127.0.0.1:8080/api/user/medicines/name/${searchInput}`
 
         let credentials = {username: 'user', password: 'user'}
         
@@ -41,9 +46,12 @@ function Header() {
         // In case of put, the result from the API is the 
         // response
         response.then((successMessage) => {
+            dispatch({
+                type: "DELETE_PRODUCT_HOME"
+            })
             for (const el of successMessage.data) {
                 dispatch({
-                    type: "ADD_TO_BASKET",
+                    type: "ADD_TO_PRODUCT_HOME",
                     item: {
                         id: el.id, 
                         name: el.name,
@@ -78,11 +86,12 @@ function Header() {
             <Form onSubmit={SubmitHandler} className="div_100">
                 <Form.Group className="mb-3 header__search" controlId="formSearch">
                     <Form.Control type="text" placeholder="Enter text to search for a medicine"
-                        className="header__searchInput" />
+                        className="header__searchInput"
+                        value={searchInput}
+                        onChange={searchInputHandler} />
                     <Button variant="primary" type="submit" className="header__searchButton" >
                         Search
                     </Button>
-                    {/* <SearchIcon className="header__searchIcon"></SearchIcon> */}
                 </Form.Group>
             </Form>
 

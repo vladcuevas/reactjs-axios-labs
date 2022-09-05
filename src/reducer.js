@@ -4,6 +4,7 @@
 
 export const initialState = {
     basket: [], 
+    product: [], 
 }
 
 // Selector
@@ -38,6 +39,20 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 basket: newBasket
+            }
+        
+        case "ADD_TO_PRODUCT_HOME":
+            return {
+                ...state, 
+                product: [...state.product, action.item], 
+            }
+
+        case "DELETE_PRODUCT_HOME":
+            let newProduct = []
+
+            return {
+                ...state, 
+                product: newProduct,
             }
 
         default:
