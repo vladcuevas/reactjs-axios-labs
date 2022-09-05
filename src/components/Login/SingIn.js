@@ -3,66 +3,152 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import { auth, createUserWithEmailAndPassword } from "./firebase";
+import UpdateData from '../../hooks/update-fetch-data'
 
 import { useNavigate } from "react-router-dom";
 
 
 function SingIn() {
     let navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // States
+    const [enteredEmail, setEmail] = useState('');
+    const [enteredPassword, setPassword] = useState('');
+    const [enteredUserName, setUserName] = useState('')
+    const [enteredFirstName, setFirstName] = useState('')
+    const [enteredLastName, setLastName] = useState('')
+    const [enteredDob, setDob] = useState('')
+    const [enteredGender, setGender] = useState('')
+    const [enteredAddress, setAddress] = useState('')
+    const [enteredPhoneNo, setPhoneNo] = useState('')
+    // End States
 
-    const register = e => {
+    // Fetch the data
+    let url = 'http://127.0.0.1:8080/api/user'
+    // End Fetch the data
+
+    const SubmitHandler = (e) => {
         e.preventDefault();
 
-        createUserWithEmailAndPassword(auth, email, password).then((auth) => {
-            if (auth) {
-                navigate('/');
+        //reset the values of input fields
+        // setEmail('');
+        // setPassword('');
+        // setUserName('')
+        // setFirstName('')
+        // setLastName('')
+        // setDob('')
+        // setGender('')
+        // setAddress('')
+        // setPhoneNo('')
+
+        let data_raw = {
+            "firstName": enteredFirstName,
+            "lastName": enteredLastName,
+            "userName": enteredUserName,
+            "active": true,
+            "email": enteredEmail,
+            "gender": enteredGender,
+            "address": enteredAddress,
+            "phoneNumber": enteredPhoneNo,
+            "dob": enteredDob,
+            "password": enteredPassword,
+            "roles": 'USER'
+        }
+
+        const putData = new UpdateData()
+
+        let response = putData.fetchData(url, 'POST', data_raw)
+
+        // In case of put, the result from the API is the 
+        // response
+        response.then((successMessage) => {
+            alert(`User! ${successMessage.headers.location} was created, login with your user and password`)
+            navigate('/');
+
+        }).catch((reason) => {
+            if (reason.cause) {
+                console.error("Had previously handled error");
+            } else {
+                console.error(`Trouble with promiseGetWord(): ${reason}`);
             }
         })
-            .catch(error => alert(error.message))
 
+        // End Put the data
+        return response
     }
+    // End Handlers
+
+    // const register = e => {
+    //     e.preventDefault();
+
+    //     createUserWithEmailAndPassword(auth, email, password).then((auth) => {
+    //         if (auth) {
+    //             navigate('/');
+    //         }
+    //     })
+    //         .catch(error => alert(error.message))
+
+    // }
 
     return (
         <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>E-Mail</Form.Label>
-                <Form.Control type="password" placeholder="Enter E-Mail" value={email} />
-            </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="text" placeholder="Enter Password" value={password} />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicName">
+            <Form.Group className="mb-3" controlId="formName">
                 <Form.Label>Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter name" />
+                <Form.Control type="text" placeholder="Enter User Name"
+                    value={enteredUserName} onChange={e => setUserName(e.target.value)} />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicLastName">
+            <Form.Group className="mb-3" controlId="formPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="text" placeholder="Enter Password"
+                    value={enteredPassword} onChange={e => setPassword(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formName">
+                <Form.Label>Name</Form.Label>
+                <Form.Control type="text" placeholder="Enter First Name"
+                    value={enteredFirstName} onChange={e => setFirstName(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formLastName">
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter last name" />
+                <Form.Control type="text" placeholder="Enter last name"
+                    value={enteredLastName} onChange={e => setLastName(e.target.value)} />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicDob">
+            <Form.Group className="mb-3" controlId="formEmail">
+                <Form.Label>E-Mail</Form.Label>
+                <Form.Control type="text"
+                    value={enteredEmail} onChange={e => setEmail(e.target.value)}
+                    placeholder="Enter E-Mail"
+                />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formDob">
                 <Form.Label>Date of Birth</Form.Label>
-                <Form.Control type="date" placeholder="Date of Birth" />
+                <Form.Control type="date" placeholder="Date of Birth"
+                    value={enteredDob} onChange={e => setDob(e.target.value)} />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicAddress">
+            <Form.Group className="mb-3" controlId="formGender">
+                <Form.Label>Gender</Form.Label>
+                <Form.Control type="text" placeholder="Gender"
+                    value={enteredGender} onChange={e => setGender(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formAddress">
                 <Form.Label>Address</Form.Label>
-                <Form.Control type="number" placeholder="Address" />
+                <Form.Control type="text" placeholder="Address"
+                    value={enteredAddress} onChange={e => setAddress(e.target.value)} />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPhoneNo">
+            <Form.Group className="mb-3" controlId="formPhoneNo">
                 <Form.Label>Phone Number</Form.Label>
-                <Form.Control type="number" placeholder="Phone Number" />
+                <Form.Control type="number" placeholder="Phone Number"
+                    value={enteredPhoneNo} onChange={e => setPhoneNo(e.target.value)} />
             </Form.Group>
 
-            <Button className='login__registerButton' variant="primary" type="submit" onClick={register}>
+            <Button className='login__registerButton' variant="primary" type="submit" onClick={SubmitHandler}>
                 Create your E-Health Account
             </Button>
 
