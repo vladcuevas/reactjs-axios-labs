@@ -29,8 +29,6 @@ function Home() {
         return res
     }
 
-    let home__row_len = Math.ceil(7 / 2);
-
     let arrs = sliceIntoChunks(slice, 2)
 
     return (
@@ -42,10 +40,11 @@ function Home() {
                 <div className="home__container">
                     <img className="home__image" src="https://www.lsretail.com/hs-fs/hubfs/BLOG_-ecommerce-and-the-cloud.jpg?width=1239&height=620&name=BLOG_-ecommerce-and-the-cloud.jpg" alt="" />
 
-                    {arrs.map((slice_home) => (
-                        <div className="home__row">
+                    {arrs.map((slice_home, i) => (
+                        <div key={i} className="home__row">
                             {slice_home.map((el) => (
                                 <Product
+                                    key={el.id}
                                     id={el.id}
                                     title={el.title}
                                     price={el.price}
