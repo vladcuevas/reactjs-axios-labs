@@ -13,7 +13,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 // end react bootstrap
 
 function AdminHeader() {
-    const [{ basket }, dispatch] = useStateValue()
 
     return (
         <div className="header">

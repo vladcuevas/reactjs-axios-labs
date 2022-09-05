@@ -6,18 +6,65 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useStateValue } from '../../StateProvider'
 
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
+import GetData from '../../hooks/use-fetch-data-class'
+
 // react bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
 // end react bootstrap
 
 function Header() {
-    const {state} = useLocation()
-    console.log(state)
+    const { state } = useLocation()
+    // console.log(state)
     const { userName } = state;
 
     const [{ basket }, dispatch] = useStateValue()
 
     let navigate = useNavigate();
+
+    const SubmitHandler = (e) => {
+        e.preventDefault();
+
+        let data_raw = {
+            "firstName": 'Amazon'
+        }
+
+        const url = 'http://127.0.0.1:8080/api/user/medicines/name/aspirin'
+
+        let credentials = {username: 'user', password: 'user'}
+        
+        const getData = new GetData()
+        let response = getData.fetchData(url, 'GET', data_raw, credentials)
+
+        // In case of put, the result from the API is the 
+        // response
+        response.then((successMessage) => {
+            for (const el of successMessage.data) {
+                dispatch({
+                    type: "ADD_TO_BASKET",
+                    item: {
+                        id: el.id, 
+                        name: el.name,
+                        image: el.image, 
+                        price: el.price, 
+                        rating: el.rating,
+                    }
+                    })
+            }
+        }).catch((reason) => {
+            if (reason.cause) {
+                console.error("Had previously handled error");
+            } else {
+                console.error(`Trouble with promiseGetWord(): ${reason}`);
+            }
+        })
+
+        // End Put the data
+        return response
+    }
+    // End Handlers
 
     return (
         <div className="header">
@@ -28,10 +75,16 @@ function Header() {
                 </div>
             </Link>
 
-            <div className="header__search">
-                <input type="text" className="header__searchInput" />
-                <SearchIcon className="header__searchIcon" />
-            </div>
+            <Form onSubmit={SubmitHandler} className="div_100">
+                <Form.Group className="mb-3 header__search" controlId="formSearch">
+                    <Form.Control type="text" placeholder="Enter text to search for a medicine"
+                        className="header__searchInput" />
+                    <Button variant="primary" type="submit" className="header__searchButton" >
+                        Search
+                    </Button>
+                    {/* <SearchIcon className="header__searchIcon"></SearchIcon> */}
+                </Form.Group>
+            </Form>
 
             <div className="header__nav">
                 <Link to="/" style={{ textDecoration: "none" }}>

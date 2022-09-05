@@ -34,16 +34,30 @@
 }
 
 .header__searchInput {
-    height: 22px;
+    height: 36px;
     padding: 10px;
     border: none;
     width: 100%;
+    border-radius: 0%;
+    margin-top: 11px;
+
 }
 
 .header__searchIcon {
     padding: 5px;
     height: 22px !important;
+    margin-top: 10px;
     background-color: #00c3ff;
+}
+
+.header__searchButton {
+    /* padding: 5px; */
+    /* height: 22px !important; */
+    margin-top: 10px;
+    background-color: #00c3ff;
+    border-radius: 0%;
+    border: 0cm;
+    text-align: center;
 }
 
 .header__nav {
@@ -80,3 +94,8 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.div_100 {
+    width: 50%;
+}
+

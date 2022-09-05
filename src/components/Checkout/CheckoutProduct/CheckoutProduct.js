@@ -3,7 +3,7 @@ import "./CheckoutProduct.css"
 import { Button } from 'react-bootstrap';
 import { useStateValue } from "../../../StateProvider"
 
-function CheckoutProduct({ id, title, price, rating, image }) {
+function CheckoutProduct({ id, name, price, rating, image }) {
     const [{basket}, dispatch] = useStateValue();
 
     const removeFromBasket = () => {
@@ -20,7 +20,7 @@ function CheckoutProduct({ id, title, price, rating, image }) {
 
                 <div className="checkoutProduct__info">
                     <p className="checkoutProduct__title">
-                        {title}
+                        {name}
                     </p>
                     <p className='checkoutProduct__price'>
                         <small>$</small>

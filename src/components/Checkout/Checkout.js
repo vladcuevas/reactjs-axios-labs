@@ -19,10 +19,10 @@ export default function Checkout() {
           {basket.map(item => (
             <CheckoutProduct 
               id = {item.id}
-              title = {item.tile}
-              image = {item.image}
+              name = {item.name}
               price = {item.price}
               rating = {item.rating}              
+              image = {item.image}
             />
           ))}
         </div>

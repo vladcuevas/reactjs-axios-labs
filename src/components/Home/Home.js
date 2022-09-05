@@ -46,7 +46,7 @@ function Home() {
                                 <Product
                                     key={el.id}
                                     id={el.id}
-                                    title={el.title}
+                                    name={el.name}
                                     price={el.price}
                                     rating={el.rating}
                                     image={el.image}

@@ -3,7 +3,9 @@ import axios from 'axios'
 import { trackPromise } from 'react-promise-tracker'
 
 export default class Requests {
-    fetchData = async (url, axiosMethod = 'GET', dataRaw = {}, credentials = {}) => {
+    fetchData = async (
+        url, axiosMethod = 'GET', dataRaw = {}, credentials = {}
+    ) => {
         try {
 
             // Add a response interceptor
