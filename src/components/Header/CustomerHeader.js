@@ -16,7 +16,7 @@ import GetData from '../../hooks/use-fetch-data-class'
 import 'bootstrap/dist/css/bootstrap.min.css'
 // end react bootstrap
 
-function AdminHeader() {
+function CustomerHeader() {
 
     const { state } = useLocation()
     // console.log(state)
@@ -37,7 +37,7 @@ function AdminHeader() {
 
         let data_raw = {}
 
-        const url = `http://127.0.0.1:8080/api/user/medicines/name/${searchInput}`
+        const url = `http://127.0.0.1:8080/api/admin/user/name/${searchInput}`
 
         let credentials = {username: 'admin', password: 'admin'}
         
@@ -48,26 +48,29 @@ function AdminHeader() {
         // response
         response.then((successMessage) => {
             dispatch({
-                type: "DELETE_ADMIN_PRODUCT"
+                type: "DELETE_USER_NAME"
             })
 
             if (successMessage.data.length === 0) {
-                alert('There are no medicines with this name')
+                alert('There are no users with this name')
             }
 
             for (const el of successMessage.data) {
                 dispatch({
-                    type: "ADD_TO_ADMIN_PRODUCT",
+                    type: "ADD_TO_USER_NAME",
                     item: {
                         id: el.id, 
-                        name: el.name,
-                        price: el.price, 
-                        discount: el.discount, 
-                        quantity: el.quantity,
-                        uses: el.uses,
-                        expirationDate: el.expirationDate,
-                        rating: el.rating,
-                        image: el.image
+                        firstName: el.firstName,
+                        lastName: el.lastName, 
+                        userName: el.userName, 
+                        email: el.email,
+                        gender: el.gender,
+                        address: el.address,
+                        phoneNumber: el.phoneNumber,
+                        dob: el.dob,
+                        password: el.password,
+                        roles: el.roles,
+                        active: el.active
                     }
                     })
             }
@@ -95,7 +98,7 @@ function AdminHeader() {
 
             <Form onSubmit={SubmitHandler} className="div_100_header">
                 <Form.Group className="mb-3 header__search" controlId="formSearch">
-                    <Form.Control type="text" placeholder="Enter text to search for a medicine"
+                    <Form.Control type="text" placeholder="Enter text to search by User Name"
                         className="header__searchInput"
                         value={searchInput}
                         onChange={searchInputHandler} />
@@ -120,4 +123,4 @@ function AdminHeader() {
     )
 }
 
-export default AdminHeader
+export default CustomerHeader

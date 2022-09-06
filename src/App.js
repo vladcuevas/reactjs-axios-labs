@@ -13,6 +13,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 import Home from './components/Home/Home'
 import AdminHome from './components/Home/AdminHome'
+import Customers from './components/Admin/Customers/Customers';
+import CustomerInfo from './components/Admin/CustomerInfo/CustomerInfo'
 
 import Login from './components/Login/Login';
 // import Footer from './components/Footer/Footer'
@@ -35,6 +37,9 @@ function App() {
           <Route path="/*" element={<Login />} />
           <Route path="/home/*" element={<Home />} />
           <Route path="admin/home/*" element={<AdminHome />} />
+          <Route path="admin/customers/*" element={<Customers rowsPerPage={4} />}>
+            <Route path=":customerId" element={<CustomerInfo />} />
+          </Route>
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/payment" element={<Payment />}/>
           <Route path="/orders" element={<Orders />} />

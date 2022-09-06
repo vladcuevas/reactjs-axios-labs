@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import Pagination from '../../TableFooter/Pagination';
 
 import styles from './Customers.module.css'
@@ -14,19 +14,31 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import useFetchData from '../../../hooks/use-fetch-data'
 import UpdateData from '../../../hooks/update-fetch-data'
 
-let PageSize = 4;
+import CustomerHeader from "../../Header/CustomerHeader";
+
+import { useStateValue } from '../../../StateProvider'
+import {dateIsValid} from '../../../functions/dateFunctions'
+
+// let PageSize = 4;
 
 function Customers({ rowsPerPage }) {
+  const [{ users }, dispatch] = useStateValue()
+  const [pageSize, setPageSize] = useState(4)
   const [currentPage, setCurrentPage] = useState(1);
   let [currentTableData, setCurrentTableData] = useState(1)
   const [reload, setReload] = useState(0)
 
+  const inputRef = useRef(null);
+
+  console.log(users.length)
+
   let url = 'http://localhost:8080/api/admin/user'
 
-  const {
-    data, loading
-  } = useFetchData(url, 'GET', {}, reload)
-
+  // START End Get the data from the users table
+  const { data, loading } = useFetchData(url, 'GET', {}, reload)
+  //END Get the data from the users table
+  
+  // START Delete products
   const deleteCustomer = (e, id) => {
     if (window.confirm(`Do you want to delete the customer ${id}?`)) {
       let deleteURL = `http://localhost:8080/api/admin/user/${id}`
@@ -46,17 +58,36 @@ function Customers({ rowsPerPage }) {
       })
     }
   }
+  // END Delete products
 
+  // https://reactjs.org/docs/hooks-reference.html#usememo
   useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    const sliced = data.slice(firstPageIndex, lastPageIndex)
+    inputRef.current = data.length
+    let data_ = []
+    if (users.length > 0) { 
+      data_ = users
+      inputRef.current = users.length
+    }
+    else
+    {
+      data_ = data
+    }
+
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    const sliced = data_.slice(firstPageIndex, lastPageIndex)
 
     const newArr = sliced.map(obj => {
       try {
-        let date = new Date(obj.dob)
-        date = date.toISOString().split('T')[0]
-        return { ...obj, expirationDate: date }
+        let date = null
+        if (dateIsValid(obj.dob)) {
+          date = obj.dob
+        }
+        else {
+          date = new Date(obj.dob)
+          date = date.toISOString().split('T')[0]
+        }
+        return { ...obj, dob: date }
       } catch (error) {
         console.error(error)
         return obj;
@@ -65,10 +96,14 @@ function Customers({ rowsPerPage }) {
 
     setCurrentTableData(newArr)
 
-    return data
-  }, [currentPage, data])
+    return data_
+  }, [currentPage, data, users])
+  // ☝️In the above line we define the dependencies of the
+  // useMemo hook
 
   return (
+    <>
+    <CustomerHeader className="text-center" />
     <div>
       {loading && <div>Loading</div>}
       {!loading && (
@@ -119,8 +154,8 @@ function Customers({ rowsPerPage }) {
             <Pagination
               className="pagination-bar"
               currentPage={currentPage}
-              totalCount={data.length}
-              pageSize={PageSize}
+              totalCount={inputRef.current}
+              pageSize={pageSize}
               onPageChange={page => setCurrentPage(page)}
             />
             <Outlet />
@@ -128,6 +163,7 @@ function Customers({ rowsPerPage }) {
         </div>
       )}
     </div>
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import Pagination from '../TableFooter/Pagination';
 import styles from './AdminProduct.module.css'
 
@@ -24,7 +24,6 @@ import {dateIsValid} from '../../functions/dateFunctions'
 function AdminProduct() {
   const [{ admin_product }, dispatch] = useStateValue()
   const [pageSize, setPageSize] = useState(4)
-  // let pageSize = 4;
   const [currentPage, setCurrentPage] = useState(1)
   let [currentTableData, setCurrentTableData] = useState(1)
   const [reload, setReload] = useState(0)
@@ -59,7 +58,7 @@ function AdminProduct() {
       })
     }
   }
-  // START Delete products
+  // END Delete products
 
   // https://reactjs.org/docs/hooks-reference.html#usememo
   useMemo(() => {
@@ -114,7 +113,7 @@ function AdminProduct() {
                 <Row>
                   <Col><Link to="create/medicine/"><AddBoxIcon />Add Medicine</Link></Col>
                   <Col><Link to="reports"><AssessmentIcon />Reports</Link></Col>
-                  <Col><Link to="customers"><GroupIcon />View Customers Info</Link></Col>
+                  <Col><Link to="/admin/customers"><GroupIcon />View Customers Info</Link></Col>
                 </Row>
               </Container>
               <table className={styles.table}>

@@ -5,7 +5,8 @@
 export const initialState = {
     basket: [],
     product: [],
-    admin_product: []
+    admin_product: [],
+    users : []
 }
 
 // Selector
@@ -68,6 +69,20 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 admin_product: newAdminProduct,
+            }
+
+        case "ADD_TO_USER_NAME":
+            return {
+                ...state,
+                users: [...state.users, action.item],
+            }
+
+        case "DELETE_USER_NAME":
+            let newUsers = []
+
+            return {
+                ...state,
+                users: newUsers,
             }
 
         default:
