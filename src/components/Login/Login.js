@@ -16,7 +16,7 @@ function Login() {
     return (
         <div key={'main_login_page'}>
             <Routes>
-                <Route path="/" element={<Header className="text-center" />} />
+                <Route path="/" element={<Header />} />
             </Routes>
             <div className='login'>
                 <Link to='/' style={{ textDecoration: "none" }}>

@@ -16,7 +16,7 @@ import Col from 'react-bootstrap/Col';
 function Header() {
     return (
         <div className="header">
-            <Container >
+            <Container>
                 <Row className="justify-content-md-center">
                     <Col md="auto">
                         <Link to="/" style={{ textDecoration: "none" }}>
