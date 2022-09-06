@@ -88,7 +88,7 @@ function Header() {
                 </div>
             </Link>
 
-            <Form onSubmit={SubmitHandler} className="div_100">
+            <Form onSubmit={SubmitHandler} className="div_100_header">
                 <Form.Group className="mb-3 header__search" controlId="formSearch">
                     <Form.Control type="text" placeholder="Enter text to search for a medicine"
                         className="header__searchInput"

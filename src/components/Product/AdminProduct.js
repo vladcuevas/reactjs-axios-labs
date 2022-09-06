@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import Pagination from '../TableFooter/Pagination';
 import styles from './AdminProduct.module.css'
 
@@ -17,28 +17,37 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import GroupIcon from '@mui/icons-material/Group';
 import useFetchData from '../../hooks/use-fetch-data'
 import UpdateData from '../../hooks/update-fetch-data'
-
-let PageSize = 4;
+import { useStateValue } from '../../StateProvider'
 
 function AdminProduct() {
+  const [{ admin_product }, dispatch] = useStateValue()
+  const [pageSize, setPageSize] = useState(4)
+  // let pageSize = 4;
   const [currentPage, setCurrentPage] = useState(1)
   let [currentTableData, setCurrentTableData] = useState(1)
   const [reload, setReload] = useState(0)
 
+  const inputRef = useRef(null);
+
+  console.log(admin_product.length)
+
   let url = 'http://localhost:8080/api/admin/medicines'
 
+  // START End Get the data from the medicines table
   let { data, loading } = useFetchData(url, 'GET', {}, reload)
+  // END End Get the data from the medicines table
 
+  // START Delete products
   const deleteProduct = (e, id) => {
     if (window.confirm(`Do you want to delete the product ${id}?`)) {
       let deleteURL = `http://localhost:8080/api/admin/medicines/${id}`
 
       let deleteData = new UpdateData()
-      let response = deleteData.fetchData(deleteURL, 'DELETE', {}, )
+      let response = deleteData.fetchData(deleteURL, 'DELETE', {},)
       console.log()
 
       response.then(() => {
-        setReload(reload+1)
+        setReload(reload + 1)
       }).catch((reason) => {
         if (reason.cause) {
           console.error("Had previously handled error");
@@ -48,27 +57,42 @@ function AdminProduct() {
       })
     }
   }
+  // START Delete products
 
+  // https://reactjs.org/docs/hooks-reference.html#usememo
   useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    const sliced = data.slice(firstPageIndex, lastPageIndex)
-
-    const newArr = sliced.map(obj => {
-      try {
-        let date = new Date(obj.expirationDate)
-        date = date.toISOString().split('T')[0]
-        return { ...obj, expirationDate: date }
-      } catch (error) {
-        console.error(error)
-        return obj;
+      inputRef.current = data.length
+      let data_ = []
+      if (admin_product.length > 0) { 
+        data_ = admin_product
+        inputRef.current = admin_product.length
       }
-    })
+      else
+      {
+        data_ = data
+      }
 
-    setCurrentTableData(newArr)
+      const firstPageIndex = (currentPage - 1) * pageSize;
+      const lastPageIndex = firstPageIndex + pageSize;
+      const sliced = data_.slice(firstPageIndex, lastPageIndex)
 
-    return data
-  }, [currentPage, data])
+      const newArr = sliced.map(obj => {
+        try {
+          let date = new Date(obj.expirationDate)
+          date = date.toISOString().split('T')[0]
+          return { ...obj, expirationDate: date }
+        } catch (error) {
+          console.error(error)
+          return obj;
+        }
+      })
+
+      setCurrentTableData(newArr)
+
+    return data_
+  }, [currentPage, data, admin_product])
+  // ☝️In the above line we define the dependencies of the
+  // useMemo hook
 
   return (
     <div>
@@ -126,8 +150,8 @@ function AdminProduct() {
               <Pagination
                 className="pagination-bar"
                 currentPage={currentPage}
-                totalCount={data.length}
-                pageSize={PageSize}
+                totalCount={inputRef.current}
+                pageSize={pageSize}
                 onPageChange={page => setCurrentPage(page)}
               />
               <Outlet />

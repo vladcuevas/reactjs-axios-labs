@@ -1,17 +1,90 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Header.css'
 
 import LocalPharmacyIcon from '@mui/icons-material/LocalPharmacy';
 import LogoutIcon from '@mui/icons-material/Logout';
-import SearchIcon from '@mui/icons-material/Search';
-import { Link, Routes, Route } from "react-router-dom"
+import { Link, Routes, Route, useLocation } from "react-router-dom"
 import AdminPortalLink from './AdminPortalLink';
+
+import { useStateValue } from '../../StateProvider'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
+import GetData from '../../hooks/use-fetch-data-class'
 
 // react bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
 // end react bootstrap
 
 function AdminHeader() {
+
+    const { state } = useLocation()
+    // console.log(state)
+    // const { userName } = state;
+
+    const [{ basket }, dispatch] = useStateValue()
+
+    const [searchInput, setSearchInput] = useState('')
+
+    // START Handlers
+
+    const searchInputHandler = (e) => {
+        setSearchInput(e.target.value)
+      }
+
+    const SubmitHandler = (e) => {
+        e.preventDefault();
+
+        let data_raw = {
+            "firstName": 'Amazon'
+        }
+
+        const url = `http://127.0.0.1:8080/api/user/medicines/name/${searchInput}`
+
+        let credentials = {username: 'user', password: 'user'}
+        
+        const getData = new GetData()
+        let response = getData.fetchData(url, 'GET', data_raw, credentials)
+
+        // In case of put, the result from the API is the 
+        // response
+        response.then((successMessage) => {
+            dispatch({
+                type: "DELETE_ADMIN_PRODUCT"
+            })
+
+            if (successMessage.data.length === 0) {
+                alert('There are no medicines with this name')
+            }
+
+            for (const el of successMessage.data) {
+                dispatch({
+                    type: "ADD_TO_ADMIN_PRODUCT",
+                    item: {
+                        id: el.id, 
+                        name: el.name,
+                        price: el.price, 
+                        discount: el.discount, 
+                        quantity: el.quantity,
+                        uses: el.uses,
+                        expiration_date: el.expiration_date,
+                        rating: el.rating,
+                        image: el.image
+                    }
+                    })
+            }
+        }).catch((reason) => {
+            if (reason.cause) {
+                console.error("Had previously handled error");
+            } else {
+                console.error(`Trouble with promiseGetWord(): ${reason}`);
+            }
+        })
+
+        // End Put the data
+        return response
+    }
+    // End Handlers
 
     return (
         <div className="header">
@@ -22,10 +95,17 @@ function AdminHeader() {
                 </div>
             </Link>
 
-            <div className="header__search">
-                <input type="text" className="header__searchInput" />
-                <SearchIcon className="header__searchIcon" />
-            </div>
+            <Form onSubmit={SubmitHandler} className="div_100_header">
+                <Form.Group className="mb-3 header__search" controlId="formSearch">
+                    <Form.Control type="text" placeholder="Enter text to search for a medicine"
+                        className="header__searchInput"
+                        value={searchInput}
+                        onChange={searchInputHandler} />
+                    <Button variant="primary" type="submit" className="header__searchButton" >
+                        Search
+                    </Button>
+                </Form.Group>
+            </Form>
 
             <div className="header__nav">
                 <Routes>
