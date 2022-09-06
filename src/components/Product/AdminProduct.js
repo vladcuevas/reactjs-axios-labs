@@ -19,6 +19,8 @@ import useFetchData from '../../hooks/use-fetch-data'
 import UpdateData from '../../hooks/update-fetch-data'
 import { useStateValue } from '../../StateProvider'
 
+import {dateIsValid} from '../../functions/dateFunctions'
+
 function AdminProduct() {
   const [{ admin_product }, dispatch] = useStateValue()
   const [pageSize, setPageSize] = useState(4)
@@ -78,8 +80,15 @@ function AdminProduct() {
 
       const newArr = sliced.map(obj => {
         try {
-          let date = new Date(obj.expirationDate)
-          date = date.toISOString().split('T')[0]
+          let date = null
+          if (dateIsValid(obj.expirationDate)) {
+            date = obj.expirationDate
+          }
+          else {
+            date = new Date(obj.expirationDate)
+            date = date.toISOString().split('T')[0]
+          }
+          
           return { ...obj, expirationDate: date }
         } catch (error) {
           console.error(error)

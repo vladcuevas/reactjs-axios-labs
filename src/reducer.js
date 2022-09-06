@@ -5,8 +5,7 @@
 export const initialState = {
     basket: [],
     product: [],
-    admin_product: [],
-    admin_product_pagination : 0
+    admin_product: []
 }
 
 // Selector

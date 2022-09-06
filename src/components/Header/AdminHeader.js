@@ -22,7 +22,7 @@ function AdminHeader() {
     // console.log(state)
     // const { userName } = state;
 
-    const [{ basket }, dispatch] = useStateValue()
+    const [{ admin_product }, dispatch] = useStateValue()
 
     const [searchInput, setSearchInput] = useState('')
 
@@ -35,9 +35,7 @@ function AdminHeader() {
     const SubmitHandler = (e) => {
         e.preventDefault();
 
-        let data_raw = {
-            "firstName": 'Amazon'
-        }
+        let data_raw = {}
 
         const url = `http://127.0.0.1:8080/api/user/medicines/name/${searchInput}`
 
@@ -67,7 +65,7 @@ function AdminHeader() {
                         discount: el.discount, 
                         quantity: el.quantity,
                         uses: el.uses,
-                        expiration_date: el.expiration_date,
+                        expirationDate: el.expirationDate,
                         rating: el.rating,
                         image: el.image
                     }
