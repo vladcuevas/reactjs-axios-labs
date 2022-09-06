@@ -5,7 +5,6 @@ import LocalPharmacyIcon from '@mui/icons-material/LocalPharmacy';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link, Routes, Route } from "react-router-dom"
-import { useStateValue } from '../../StateProvider'
 import AdminPortalLink from './AdminPortalLink';
 
 // react bootstrap

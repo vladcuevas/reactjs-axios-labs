@@ -49,6 +49,11 @@ function Header() {
             dispatch({
                 type: "DELETE_PRODUCT_HOME"
             })
+
+            if (successMessage.data.length === 0) {
+                alert('There are no medicines with this name')
+            }
+
             for (const el of successMessage.data) {
                 dispatch({
                     type: "ADD_TO_PRODUCT_HOME",
