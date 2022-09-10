@@ -37,7 +37,7 @@ function CustomerHeader() {
 
         let data_raw = {}
 
-        const url = `http://127.0.0.1:8080/api/admin/user/name/${searchInput}`
+        const url = `http://localhost:8080/api/admin/user/name/${searchInput}`
 
         let credentials = {username: 'admin', password: 'admin'}
         

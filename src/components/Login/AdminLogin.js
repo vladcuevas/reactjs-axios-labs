@@ -16,7 +16,7 @@ function AdminLogin() {
         const credentials = { "username": userName, "password": password };
         console.log(credentials)
 
-        let url = 'http://127.0.0.1:8080/api/admin/'
+        let url = 'http://localhost:8080/api/admin/'
 
         const getData = new GetData()
         let response = getData.fetchData(url, 'GET', {}, credentials)

@@ -30,7 +30,7 @@ function UserLogin() {
             const credentials = { "username": userName, "password": password };
             console.log(credentials)
 
-            let url = 'http://127.0.0.1:8080/api/'
+            let url = 'http://localhost:8080/api/'
 
             const getData = new GetData()
             let response = getData.fetchData(url, 'GET', {}, credentials)

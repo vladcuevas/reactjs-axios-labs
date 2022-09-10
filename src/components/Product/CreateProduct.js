@@ -100,7 +100,7 @@ function CreateProduct() {
 
     const postData = new UpdateData()
 
-    const url = 'http://127.0.0.1:8080/api/admin/medicines'
+    const url = 'http://localhost:8080/api/admin/medicines'
 
     let response = postData.fetchData(url, 'POST', data_raw)
 

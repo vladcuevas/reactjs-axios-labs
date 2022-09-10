@@ -23,7 +23,7 @@ function SingIn() {
     // End States
 
     // Fetch the data
-    let url = 'http://127.0.0.1:8080/api/user'
+    let url = 'http://localhost:8080/api/user'
     // End Fetch the data
 
     const SubmitHandler = (e) => {

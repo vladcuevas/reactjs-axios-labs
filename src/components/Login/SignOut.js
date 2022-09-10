@@ -12,7 +12,7 @@ function SignOut() {
         const signOut = e => {
             e.preventDefault();
 
-            let url = 'http://127.0.0.1:8080/perform_logout'
+            let url = 'http://localhost:8080/perform_logout'
 
             const getData = new GetData()
             let response = getData.fetchData(url, 'GET', {}, {username: 'user', password: 'user'})

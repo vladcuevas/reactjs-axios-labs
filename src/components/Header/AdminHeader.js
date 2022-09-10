@@ -37,7 +37,7 @@ function AdminHeader() {
 
         let data_raw = {}
 
-        const url = `http://127.0.0.1:8080/api/user/medicines/name/${searchInput}`
+        const url = `http://localhost:8080/api/user/medicines/name/${searchInput}`
 
         let credentials = {username: 'admin', password: 'admin'}
         
