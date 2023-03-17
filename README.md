@@ -1,33 +1,37 @@
 # React JS Axios Labs
 
-This is a repository cloned from the [reactjs-labs][1], and its intention is to add [AXIOS][11] to be able to call REST APIs. The project [Sping-Boot-Labas][9] will be used as the [REST API][4]
+This repository is a fork of [reactjs-labs][1], enhanced with [Axios][11] to enable REST API calls. The [Spring-Boot-Labas][9] project serves as the [REST API][4] for this application.
 
-The plan is to integrate the [Frontend][5] and the [Backend][6] with AXIOS, then deploy all of these components on a [Kubernetes][7] cluster by creating Kubernetes objects. These [Kubernetes objects][8] will contain the desired state of our deployment.
+The goal is to integrate the [frontend][5] and [backend][6] using Axios, and then deploy all components on a [Kubernetes][7] cluster by creating Kubernetes objects. These [Kubernetes objects][8] will define the desired state of our deployment.
 
-The 3 repositories that make part of this project are:
-1. Backend: [Sping-Boot-Labas][9]
-2. FrontEnd: [reactjs-axios-labs][10], the ReactJS version with API calls using [AXIOS][11], which will use the RESTAPI created in the project [Sping-Boot-Labas][9]
-    - There is a [ReacJS][13] version without API calls [reactjs-labs][1]
-3. The integration will be located in [Minikubes-Labs][15]
+## Repositories
+
+The following repositories are part of this project:
+
+1. Backend: [Spring-Boot-Labas][9]
+2. Frontend: [reactjs-axios-labs][10] - A ReactJS version with API calls using [Axios][11], utilizing the REST API created in the [Spring-Boot-Labas][9] project.
+    - A [ReactJS][13] version without API calls can be found at [reactjs-labs][1].
+3. Integration: [Minikubes-Labs][15]
 
 ## Requirements
 
-In this point the requirements are:
-1. [ReacJS][16]
+To set up and run this project, you will need:
+
+1. [ReactJS][16]
 2. [NodeJS][17]
-3. [AXIOS][18]
+3. [Axios][18]
 4. [Minikube][19]
 5. [Spring Boot][20]
 6. [Java][21]
-7. A Database, it is planned to use [MySQL][22]
+7. A database (e.g., [MySQL][22])
 
 ### Firebase
 
-Start the application with npm start command, and then login with use: admin and password: admin for the admin portal. For the user portal, login with user: user and password: user
+Start the application using the `npm start` command. Log in to the admin portal with username: `admin` and password: `admin`. To access the user portal, log in with username: `user` and password: `user`.
 
-## Start the application
+## Running the Application
 
-For the FrontEnd Part, we can use the below command:
+To start the frontend, run the following command:
 
 ```powershell
 npm start
